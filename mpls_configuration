@@ -1,0 +1,75 @@
+$$$$$$$$$$$$$
+PE1
+$$$$$$$$$$$$$$
+
+conf t
+ip cef 
+mpls label range 100 199
+mpls ldp router-id loopback 0 force
+interface g0/1
+mpls ip
+mpls label protocol ldp
+end
+wr
+
+$$$$$$$$$$$$$$$
+P1
+$$$$$$$$$$$$$$$
+
+
+conf t
+ip cef 
+mpls label range 200 299
+mpls ldp router-id loopback 0 force
+interface g0/1
+mpls ip 
+mpls label protocol ldp
+interface g0/2
+mpls ip
+mpls label protocol ldp
+end
+wr
+
+
+$$$$$$$$$$$$$$$
+P2
+$$$$$$$$$$$$$$$
+
+conf t
+ip cef 
+mpls label range 300 399
+mpls ldp router-id loopback0 force
+interface g0/2
+mpls ip
+mpls label protocol ldp
+int g0/1
+mpls ip 
+mpls label protocol ldp
+end
+wr
+
+$$$$$$$$$$$$$$$$$
+PE2
+$$$$$$$$$$$$$$$$$
+
+conf t
+ip cef 
+mpls label range 400 499
+mpls ldp router-id loopback 0 force
+int g0/1 
+mpls ip
+mpls label protocol ldp 
+end 
+wr
+
+
+####################################
+TO VERIFY THE MPLS CONFIGURATION
+####################################
+
+show mpls interfaces
+show mpls ldp discovery
+show mpls ldp bindings
+show mpls forwarding
+traceroute mpls ipv4 <mpls ip>
+ping mpls ipv4 <mpls ip>
